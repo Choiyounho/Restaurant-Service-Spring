@@ -1,6 +1,5 @@
 package com.soten.eatgo.domain;
 
-
 public class Restaurant {
 
     private final String name;
