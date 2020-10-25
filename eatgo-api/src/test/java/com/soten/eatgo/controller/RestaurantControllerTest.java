@@ -1,5 +1,8 @@
 package com.soten.eatgo.controller;
 
+import com.soten.eatgo.application.RestaurantService;
+import com.soten.eatgo.domain.MenuItemRepository;
+import com.soten.eatgo.domain.MenuItemRepositoryImplement;
 import com.soten.eatgo.domain.RestaurantRepository;
 import com.soten.eatgo.domain.RestaurantRepositoryImplement;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +26,12 @@ class RestaurantControllerTest {
     @SpyBean(RestaurantRepositoryImplement.class)
     private RestaurantRepository restaurantRepository;
 
+    @SpyBean(MenuItemRepositoryImplement.class)
+    private MenuItemRepository menuItemRepository;
+
+    @SpyBean(RestaurantService.class)
+    private RestaurantService restaurantService;
+
     @Test
     @DisplayName("list Test")
     void list() throws Exception {
@@ -42,7 +51,9 @@ class RestaurantControllerTest {
                 .andExpect(content()
                         .string(containsString("\"id\":1004")))
                 .andExpect(content()
-                        .string(containsString("\"name\":\"Bob zip\"")));
+                        .string(containsString("\"name\":\"Bob zip\"")))
+                .andExpect(content().
+                        string(containsString("Kimchi")));
 
         mvc.perform(get("/restaurants/2020"))
                 .andExpect(status().isOk())
