@@ -8,16 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.StringContains.containsString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(RestaurantController.class)
 class RestaurantControllerTest {
@@ -33,7 +36,7 @@ class RestaurantControllerTest {
     void list() throws Exception {
 
         List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(new Restaurant(1004L,"Cow Marketplace", "Guri"));
+        restaurants.add(new Restaurant(1004L, "Cow Marketplace", "Guri"));
 
         given(restaurantService.getRestaurants()).willReturn(restaurants);
 
@@ -49,8 +52,8 @@ class RestaurantControllerTest {
     @Test
     void detail() throws Exception {
 
-        Restaurant restaurant = new Restaurant(1004L,"Cow Marketplace", "Guri");
-        Restaurant restaurant1 = new Restaurant(2020L,"Omogari Kimchi", "Guri");
+        Restaurant restaurant = new Restaurant(1004L, "Cow Marketplace", "Guri");
+        Restaurant restaurant1 = new Restaurant(2020L, "Omogari Kimchi", "Guri");
         restaurant.addMenuItem(new MenuItem("Kimchi"));
 
         given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
@@ -71,6 +74,21 @@ class RestaurantControllerTest {
                         .string(containsString("\"id\":2020")))
                 .andExpect(content()
                         .string(containsString("\"name\":\"Omogari Kimchi\"")));
+    }
+
+    @Test
+    void create() throws Exception {
+        Restaurant restaurant = new Restaurant(1234L, "BeRyong", "Busan");
+
+        mvc.perform(post("/restaurants")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"BeRyong\",\"address\":\"Busan\"}"))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("location", "/restaurants/1234"))
+                .andExpect(content().string("{}"));
+
+        verify(restaurantService).addRestaurant(any());
+
     }
 
 }
