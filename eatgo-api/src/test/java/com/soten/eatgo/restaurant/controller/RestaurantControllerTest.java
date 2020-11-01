@@ -1,13 +1,13 @@
-package com.soten.eatgo.controller;
+package com.soten.eatgo.restaurant.controller;
 
-import com.soten.eatgo.application.RestaurantService;
-import com.soten.eatgo.domain.*;
+import com.soten.eatgo.menu.domain.MenuItem;
+import com.soten.eatgo.restaurant.domain.Restaurant;
+import com.soten.eatgo.restaurant.service.RestaurantService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -78,11 +78,9 @@ class RestaurantControllerTest {
 
     @Test
     void create() throws Exception {
-        Restaurant restaurant = new Restaurant(1234L, "BeRyong", "Busan");
-
         mvc.perform(post("/restaurants")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"BeRyong\",\"address\":\"Busan\"}"))
+                .content("{\"name\":\"BeRyong\",\"address\":\"Busan\"}\n"))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("location", "/restaurants/1234"))
                 .andExpect(content().string("{}"));

@@ -1,4 +1,4 @@
-package com.soten.eatgo.domain;
+package com.soten.eatgo.restaurant.domain;
 
 import java.util.List;
 

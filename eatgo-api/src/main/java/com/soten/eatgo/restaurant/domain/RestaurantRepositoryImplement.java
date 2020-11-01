@@ -1,4 +1,4 @@
-package com.soten.eatgo.domain;
+package com.soten.eatgo.restaurant.domain;
 
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,7 @@ public class RestaurantRepositoryImplement implements RestaurantRepository {
     @Override
     public Restaurant findById(Long id) {
         return restaurants.stream()
-                .filter(r -> r.getId().equals(id))
+                .filter(restaurant -> restaurant.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }

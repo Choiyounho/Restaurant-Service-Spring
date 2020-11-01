@@ -1,4 +1,4 @@
-package com.soten.eatgo.domain;
+package com.soten.eatgo.menu.domain;
 
 public class MenuItem {
 

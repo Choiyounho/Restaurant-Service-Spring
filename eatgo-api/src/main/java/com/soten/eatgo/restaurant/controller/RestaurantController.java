@@ -1,11 +1,7 @@
-package com.soten.eatgo.controller;
+package com.soten.eatgo.restaurant.controller;
 
-import com.soten.eatgo.application.RestaurantService;
-import com.soten.eatgo.domain.MenuItem;
-import com.soten.eatgo.domain.MenuItemRepository;
-import com.soten.eatgo.domain.Restaurant;
-import com.soten.eatgo.domain.RestaurantRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.soten.eatgo.restaurant.domain.Restaurant;
+import com.soten.eatgo.restaurant.service.RestaurantService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,14 +12,16 @@ import java.util.List;
 @RestController
 public class RestaurantController {
 
-    @Autowired
     private RestaurantService restaurantService;
 
-//    @Autowired
-//    private RestaurantRepository restaurantRepository;
-//
-//    @Autowired
-//    private MenuItemRepository menuItemRepository;
+    public RestaurantController(RestaurantService restaurantService) {
+        this.restaurantService = restaurantService;
+    }
+
+    @GetMapping("/")
+    public String main() {
+        return "My Restaurant Service!!!";
+    }
 
     @GetMapping("/restaurants")
     public List<Restaurant> list() {
@@ -34,19 +32,20 @@ public class RestaurantController {
 
     @GetMapping("/restaurants/{id}")
     public Restaurant detail(@PathVariable("id") Long id) {
-        Restaurant restaurant = restaurantService.getRestaurant(id);
-
-        return restaurant;
+        return restaurantService.getRestaurant(id);
     }
 
-    @PostMapping("/restaurants")
-    public ResponseEntity<?> create(@RequestBody Restaurant resource) throws URISyntaxException {
-        String name = "BeRyong";
-        String address = "Busan";
+    @PostMapping(value = "/restaurants")
+    public ResponseEntity<?> create(@RequestBody Restaurant resource)
+            throws URISyntaxException {
+        String name = resource.getName();
+        String address = resource.getAddress();
+
         Restaurant restaurant = new Restaurant(1234L, name, address);
         restaurantService.addRestaurant(restaurant);
 
         URI location = new URI("/restaurants/" + restaurant.getId());
         return ResponseEntity.created(location).body("{}");
     }
+
 }

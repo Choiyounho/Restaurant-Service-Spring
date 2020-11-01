@@ -1,10 +1,9 @@
-package com.soten.eatgo.application;
+package com.soten.eatgo.restaurant.service;
 
-import com.soten.eatgo.domain.MenuItem;
-import com.soten.eatgo.domain.MenuItemRepository;
-import com.soten.eatgo.domain.Restaurant;
-import com.soten.eatgo.domain.RestaurantRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.soten.eatgo.menu.domain.MenuItem;
+import com.soten.eatgo.menu.domain.MenuItemRepository;
+import com.soten.eatgo.restaurant.domain.Restaurant;
+import com.soten.eatgo.restaurant.domain.RestaurantRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +11,9 @@ import java.util.List;
 @Service
 public class RestaurantService {
 
-    @Autowired
-    RestaurantRepository restaurantRepository;
+    private RestaurantRepository restaurantRepository;
 
-    @Autowired
-    MenuItemRepository menuItemRepository;
+    private MenuItemRepository menuItemRepository;
 
     public RestaurantService(RestaurantRepository restaurantRepository,
                              MenuItemRepository menuItemRepository) {
@@ -25,8 +22,7 @@ public class RestaurantService {
     }
 
     public List<Restaurant> getRestaurants() {
-        List<Restaurant> restaurants = restaurantRepository.findAll();
-        return restaurants;
+        return restaurantRepository.findAll();
     }
 
     public Restaurant getRestaurant(Long id) {
@@ -38,6 +34,6 @@ public class RestaurantService {
     }
 
     public void addRestaurant(Restaurant restaurant) {
-
+        //
     }
 }

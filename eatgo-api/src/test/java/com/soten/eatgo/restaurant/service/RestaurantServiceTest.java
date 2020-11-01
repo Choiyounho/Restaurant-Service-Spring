@@ -1,13 +1,14 @@
-package com.soten.eatgo.application;
+package com.soten.eatgo.restaurant.service;
 
-import com.soten.eatgo.domain.*;
-import com.soten.eatgo.domain.MenuItem;
+import com.soten.eatgo.menu.domain.MenuItem;
+import com.soten.eatgo.menu.domain.MenuItemRepository;
+import com.soten.eatgo.restaurant.domain.Restaurant;
+import com.soten.eatgo.restaurant.domain.RestaurantRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
