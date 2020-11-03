@@ -2,15 +2,33 @@ package com.soten.eatgo.restaurant.domain;
 
 import com.soten.eatgo.menu.domain.MenuItem;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Restaurant {
 
+    @Id
+    @GeneratedValue
     private Long id;
+
     private String name;
     private String address;
+
+    @Transient
     private List<MenuItem> menuItems = new ArrayList<>();
+
+    public Restaurant() {
+    }
+
+    public Restaurant(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
 
     public Restaurant(long id, String name, String address) {
         this.id = id;
@@ -30,8 +48,8 @@ public class Restaurant {
         return name + " in " + address;
     }
 
-    public Long getId() {
-        return id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public List<MenuItem> getMenuItems() {
@@ -46,5 +64,9 @@ public class Restaurant {
         for (MenuItem menuItem : menuItems) {
             addMenuItem(menuItem);
         }
+    }
+
+    public Long getId() {
+        return id;
     }
 }
