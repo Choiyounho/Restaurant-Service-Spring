@@ -43,7 +43,10 @@ public class RestaurantController {
         String address = resource.getAddress();
 
         Restaurant restaurant = restaurantService.addRestaurant(
-                new Restaurant(name, address));
+                Restaurant.builder()
+                        .name(resource.getName())
+                        .address(resource.getAddress())
+                        .build());
 
         URI location = new URI("/restaurants/" + restaurant.getId());
         return ResponseEntity.created(location).body("{}");
