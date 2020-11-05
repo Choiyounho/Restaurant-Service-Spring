@@ -18,7 +18,6 @@ import java.util.List;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -93,7 +92,7 @@ class RestaurantControllerTest {
     }
 
     @Test
-    void create() throws Exception {
+    void createWithValidData() throws Exception {
 
         given(restaurantService.addRestaurant(any())).will(invocation -> {
             Restaurant restaurant = invocation.getArgument(0);
@@ -103,6 +102,7 @@ class RestaurantControllerTest {
                     .address(restaurant.getAddress())
                     .build();
         });
+
         mvc.perform(post("/restaurants")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"BeRyong\",\"address\":\"Busan\"}\n"))
@@ -114,9 +114,18 @@ class RestaurantControllerTest {
 
     }
 
+    @Test
+    void createWithInvalidData() throws Exception {
+
+        mvc.perform(post("/restaurants")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"BeRyong\",\"address\":\"\"}"))
+                .andExpect(status().isBadRequest());
+
+    }
 
     @Test
-    void update() throws Exception {
+    void updateWithValidData() throws Exception {
 
         mvc.perform(patch("/restaurants/1004")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -124,6 +133,16 @@ class RestaurantControllerTest {
                 .andExpect(status().isOk());
 
         verify(restaurantService).updateRestaurant(1004L, "YH Bar", "Guri");
+    }
+
+    @Test
+    void updateWithoutName() throws Exception {
+
+        mvc.perform(patch("/restaurants/1004")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"\",\"address\":\"Busan\"}"))
+                .andExpect(status().isBadRequest());
+
     }
 
 }

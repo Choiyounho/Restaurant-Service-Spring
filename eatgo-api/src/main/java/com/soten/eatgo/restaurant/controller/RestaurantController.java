@@ -5,6 +5,7 @@ import com.soten.eatgo.restaurant.service.RestaurantService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -37,11 +38,8 @@ public class RestaurantController {
     }
 
     @PostMapping(value = "/restaurants")
-    public ResponseEntity<?> create(@RequestBody Restaurant resource)
+    public ResponseEntity<?> create(@Valid @RequestBody Restaurant resource)
             throws URISyntaxException {
-        String name = resource.getName();
-        String address = resource.getAddress();
-
         Restaurant restaurant = restaurantService.addRestaurant(
                 Restaurant.builder()
                         .name(resource.getName())
@@ -54,7 +52,7 @@ public class RestaurantController {
 
     @PatchMapping(value = "/restaurants/{id}")
     public String update(@PathVariable("id") Long id,
-                         @RequestBody Restaurant resource) {
+                         @Valid @RequestBody Restaurant resource) {
         String name = resource.getName();
         String address = resource.getAddress();
         restaurantService.updateRestaurant(id, name, address);
