@@ -1,2 +1,9 @@
-package com.soten.eatgo.domain;public class RestaurantNotFoundException {
+package com.soten.eatgo.restaurant.domain;
+
+public class RestaurantNotFoundException extends RuntimeException {
+
+    public RestaurantNotFoundException(Long id) {
+        super("Could not find restaurant " + id);
+    }
+
 }

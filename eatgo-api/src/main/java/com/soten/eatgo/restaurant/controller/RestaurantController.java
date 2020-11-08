@@ -34,6 +34,9 @@ public class RestaurantController {
 
     @GetMapping("/restaurants/{id}")
     public Restaurant detail(@PathVariable("id") Long id) {
+
+        Restaurant restaurant = restaurantService.getRestaurant(id);
+
         return restaurantService.getRestaurant(id);
     }
 
@@ -59,4 +62,6 @@ public class RestaurantController {
 
         return "{}";
     }
+
+
 }

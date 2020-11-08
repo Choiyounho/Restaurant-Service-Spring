@@ -1,5 +1,6 @@
 package com.soten.eatgo.restaurant.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.soten.eatgo.menu.domain.MenuItem;
 import lombok.*;
 
@@ -30,6 +31,7 @@ public class Restaurant {
     private String address;
 
     @Transient
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<MenuItem> menuItems = new ArrayList<>();
 
     public String getInformation() {

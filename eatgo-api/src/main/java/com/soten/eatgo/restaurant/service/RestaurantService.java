@@ -3,6 +3,7 @@ package com.soten.eatgo.restaurant.service;
 import com.soten.eatgo.menu.domain.MenuItem;
 import com.soten.eatgo.menu.domain.MenuItemRepository;
 import com.soten.eatgo.restaurant.domain.Restaurant;
+import com.soten.eatgo.restaurant.domain.RestaurantNotFoundException;
 import com.soten.eatgo.restaurant.domain.RestaurantRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,8 @@ public class RestaurantService {
     }
 
     public Restaurant getRestaurant(Long id) {
-        Restaurant restaurant = restaurantRepository.findById(id).orElse(null); // 임시로 null 처리
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new RestaurantNotFoundException(id));
 
         List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
         restaurant.setMenuItems(menuItems);

@@ -1,5 +1,6 @@
 package com.soten.eatgo.restaurant.controller;
 
+import com.soten.eatgo.restaurant.domain.RestaurantNotFoundException;
 import com.soten.eatgo.menu.domain.MenuItem;
 import com.soten.eatgo.restaurant.domain.Restaurant;
 import com.soten.eatgo.restaurant.service.RestaurantService;
@@ -54,7 +55,7 @@ class RestaurantControllerTest {
     }
 
     @Test
-    void detail() throws Exception {
+    void detailWithExisted() throws Exception {
 
         Restaurant restaurant = Restaurant.builder()
                 .id(1004L)
@@ -89,6 +90,18 @@ class RestaurantControllerTest {
                         .string(containsString("\"id\":2020")))
                 .andExpect(content()
                         .string(containsString("\"name\":\"Omogari Kimchi\"")));
+    }
+
+    @Test
+    public void detailWithNoExisted() throws Exception {
+
+        given(restaurantService.getRestaurant(404L))
+                .willThrow(new RestaurantNotFoundException(404L));
+
+        mvc.perform(get("/restaurants/404"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("{}"));
+
     }
 
     @Test
