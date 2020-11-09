@@ -1,6 +1,5 @@
-package com.soten.eatgo.restaurant.controller;
+package com.soten.eatgo.global.exception;
 
-import com.soten.eatgo.restaurant.domain.RestaurantNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,4 +15,5 @@ public class RestaurantErrorAdvice {
     public String handleNotFound() {
         return "{}";
     }
+
 }
