@@ -1,6 +1,6 @@
 package com.soten.eatgo.restaurant.controller;
 
-import com.soten.eatgo.restaurant.domain.RestaurantNotFoundException;
+import com.soten.eatgo.global.exception.RestaurantNotFoundException;
 import com.soten.eatgo.menu.domain.MenuItem;
 import com.soten.eatgo.restaurant.domain.Restaurant;
 import com.soten.eatgo.restaurant.service.RestaurantService;
@@ -32,16 +32,19 @@ class RestaurantControllerTest {
     @MockBean
     private RestaurantService restaurantService;
 
-    @Test
-    @DisplayName("list Test")
-    void list() throws Exception {
+    private Restaurant newInstanceOfRestaurant(Long id, String name, String address) {
+        return Restaurant.builder()
+                .id(id)
+                .name(name)
+                .address(address)
+                .build();
+    }
 
+    @Test
+    @DisplayName("/restaurants : 전체 식당 목록 불러오기")
+    void list() throws Exception {
         List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(Restaurant.builder()
-                .id(1004L)
-                .name("Cow Marketplace")
-                .address("Guri")
-                .build());
+        restaurants.add(newInstanceOfRestaurant(1004L,"Cow Marketplace", "Guri"));
 
         given(restaurantService.getRestaurants()).willReturn(restaurants);
 
@@ -55,19 +58,12 @@ class RestaurantControllerTest {
     }
 
     @Test
+    @DisplayName("/restaurants/{id} : id 식당 정보 불러오기")
     void detailWithExisted() throws Exception {
+        Restaurant restaurant = newInstanceOfRestaurant(1004L,"Cow Marketplace", "Guri");
 
-        Restaurant restaurant = Restaurant.builder()
-                .id(1004L)
-                .name("Cow Marketplace")
-                .address("Guri")
-                .build();
+        Restaurant restaurant1 = newInstanceOfRestaurant(2020L, "Omogari Kimchi", "Guri");
 
-        Restaurant restaurant1 = Restaurant.builder()
-                .id(2020L)
-                .name("Omogari Kimchi")
-                .address("Guri")
-                .build();
         restaurant.setMenuItems(Arrays.asList(MenuItem.builder()
                 .name("Kimchi")
                 .build()));
@@ -93,8 +89,8 @@ class RestaurantControllerTest {
     }
 
     @Test
+    @DisplayName("/restaurants/{id} : id 식당 정보가 없을 시 예외 처리")
     public void detailWithNoExisted() throws Exception {
-
         given(restaurantService.getRestaurant(404L))
                 .willThrow(new RestaurantNotFoundException(404L));
 
@@ -105,15 +101,11 @@ class RestaurantControllerTest {
     }
 
     @Test
+    @DisplayName("/restaurants : 식당 추가 성공")
     void createWithValidData() throws Exception {
-
         given(restaurantService.addRestaurant(any())).will(invocation -> {
             Restaurant restaurant = invocation.getArgument(0);
-            return Restaurant.builder()
-                    .id(1234L)
-                    .name(restaurant.getName())
-                    .address(restaurant.getAddress())
-                    .build();
+            return newInstanceOfRestaurant(1234L, restaurant.getName(), restaurant.getAddress());
         });
 
         mvc.perform(post("/restaurants")
@@ -124,22 +116,20 @@ class RestaurantControllerTest {
                 .andExpect(content().string("{}"));
 
         verify(restaurantService).addRestaurant(any());
-
     }
 
     @Test
+    @DisplayName("/restaurants : 식당 추가 실패")
     void createWithInvalidData() throws Exception {
-
         mvc.perform(post("/restaurants")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"BeRyong\",\"address\":\"\"}"))
                 .andExpect(status().isBadRequest());
-
     }
 
     @Test
+    @DisplayName("/restaurants/{id} : 식당 id의 이름과 주소 변경")
     void updateWithValidData() throws Exception {
-
         mvc.perform(patch("/restaurants/1004")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"YH Bar\",\"address\":\"Guri\"}"))
@@ -149,13 +139,12 @@ class RestaurantControllerTest {
     }
 
     @Test
+    @DisplayName("/restaurants/{id} : 잘못된 정보 입력 시 400 state 코드 발생")
     void updateWithoutName() throws Exception {
-
         mvc.perform(patch("/restaurants/1004")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"\",\"address\":\"Busan\"}"))
                 .andExpect(status().isBadRequest());
-
     }
 
 }

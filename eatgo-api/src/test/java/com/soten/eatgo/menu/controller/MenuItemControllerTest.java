@@ -1,6 +1,7 @@
 package com.soten.eatgo.menu.controller;
 
 import com.soten.eatgo.menu.service.MenuItemService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -24,15 +25,14 @@ class MenuItemControllerTest {
     private MenuItemService menuItemService;
 
     @Test
+    @DisplayName("메뉴아이템 등록")
     void bulkUpdate() throws Exception {
-
         mvc.perform(patch("/restaurants/1/menuitems")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("[]"))
                 .andExpect(status().isOk());
 
         verify(menuItemService).bulkUpdate(eq(1L), any());
-
     }
 
 }

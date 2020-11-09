@@ -3,6 +3,7 @@ package com.soten.eatgo.menu.service;
 import com.soten.eatgo.menu.domain.MenuItem;
 import com.soten.eatgo.menu.domain.MenuItemRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -21,7 +22,14 @@ class MenuItemServiceTest {
     @Mock
     private MenuItemRepository menuItemRepository;
 
+    @BeforeEach()
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
+        menuItemService = new MenuItemService(menuItemRepository);
+    }
+
     @Test
+    @DisplayName("식당 메뉴 관리")
     void bulkUpdate() {
         List<MenuItem> menuItems = new ArrayList<>();
 
@@ -33,13 +41,6 @@ class MenuItemServiceTest {
 
         verify(menuItemRepository, times(2)).save(any());
         verify(menuItemRepository, times(1)).deleteById(any());
-    }
-
-    @BeforeEach()
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
-
-        menuItemService = new MenuItemService(menuItemRepository);
     }
 
 }

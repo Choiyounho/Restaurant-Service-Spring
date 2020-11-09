@@ -3,7 +3,7 @@ package com.soten.eatgo.restaurant.service;
 import com.soten.eatgo.menu.domain.MenuItem;
 import com.soten.eatgo.menu.domain.MenuItemRepository;
 import com.soten.eatgo.restaurant.domain.Restaurant;
-import com.soten.eatgo.restaurant.domain.RestaurantNotFoundException;
+import com.soten.eatgo.global.exception.RestaurantNotFoundException;
 import com.soten.eatgo.restaurant.domain.RestaurantRepository;
 import org.springframework.stereotype.Service;
 

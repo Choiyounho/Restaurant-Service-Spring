@@ -27,16 +27,11 @@ public class RestaurantController {
 
     @GetMapping("/restaurants")
     public List<Restaurant> list() {
-        List<Restaurant> restaurants = restaurantService.getRestaurants();
-
-        return restaurants;
+        return restaurantService.getRestaurants();
     }
 
     @GetMapping("/restaurants/{id}")
     public Restaurant detail(@PathVariable("id") Long id) {
-
-        Restaurant restaurant = restaurantService.getRestaurant(id);
-
         return restaurantService.getRestaurant(id);
     }
 
@@ -58,10 +53,9 @@ public class RestaurantController {
                          @Valid @RequestBody Restaurant resource) {
         String name = resource.getName();
         String address = resource.getAddress();
-        restaurantService.updateRestaurant(id, name, address);
 
+        restaurantService.updateRestaurant(id, name, address);
         return "{}";
     }
-
 
 }
