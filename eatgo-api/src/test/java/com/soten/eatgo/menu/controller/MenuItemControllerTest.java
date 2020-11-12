@@ -25,7 +25,7 @@ class MenuItemControllerTest {
     private MenuItemService menuItemService;
 
     @Test
-    @DisplayName("메뉴아이템 등록")
+    @DisplayName("/restaurants/{restaurantId}/menuitems : 메뉴아이템 등록")
     void bulkUpdate() throws Exception {
         mvc.perform(patch("/restaurants/1/menuitems")
                 .contentType(MediaType.APPLICATION_JSON)

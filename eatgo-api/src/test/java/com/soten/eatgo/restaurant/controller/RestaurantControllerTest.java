@@ -4,6 +4,7 @@ import com.soten.eatgo.global.exception.RestaurantNotFoundException;
 import com.soten.eatgo.menu.domain.MenuItem;
 import com.soten.eatgo.restaurant.domain.Restaurant;
 import com.soten.eatgo.restaurant.service.RestaurantService;
+import com.soten.eatgo.review.domain.Review;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ class RestaurantControllerTest {
     @DisplayName("/restaurants : 전체 식당 목록 불러오기")
     void list() throws Exception {
         List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(newInstanceOfRestaurant(1004L,"Cow Marketplace", "Guri"));
+        restaurants.add(newInstanceOfRestaurant(1004L, "Cow Marketplace", "Guri"));
 
         given(restaurantService.getRestaurants()).willReturn(restaurants);
 
@@ -60,13 +61,20 @@ class RestaurantControllerTest {
     @Test
     @DisplayName("/restaurants/{id} : id 식당 정보 불러오기")
     void detailWithExisted() throws Exception {
-        Restaurant restaurant = newInstanceOfRestaurant(1004L,"Cow Marketplace", "Guri");
+        Restaurant restaurant = newInstanceOfRestaurant(1004L, "Cow Marketplace", "Guri");
 
         Restaurant restaurant1 = newInstanceOfRestaurant(2020L, "Omogari Kimchi", "Guri");
 
         restaurant.setMenuItems(Arrays.asList(MenuItem.builder()
                 .name("Kimchi")
                 .build()));
+
+        Review review = Review.builder()
+                .name("YH")
+                .score(5)
+                .description("Tasty good")
+                .build();
+        restaurant.setReviews(Arrays.asList(review));
 
         given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
         given(restaurantService.getRestaurant(2020L)).willReturn(restaurant1);
@@ -78,14 +86,9 @@ class RestaurantControllerTest {
                 .andExpect(content()
                         .string(containsString("\"name\":\"Cow Marketplace\"")))
                 .andExpect(content().
-                        string(containsString("Kimchi")));
-
-        mvc.perform(get("/restaurants/2020"))
-                .andExpect(status().isOk())
-                .andExpect(content()
-                        .string(containsString("\"id\":2020")))
-                .andExpect(content()
-                        .string(containsString("\"name\":\"Omogari Kimchi\"")));
+                        string(containsString("Kimchi")))
+                .andExpect(content().
+                        string(containsString("Tasty good")));
     }
 
     @Test
