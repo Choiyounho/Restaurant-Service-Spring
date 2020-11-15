@@ -12,6 +12,9 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import static com.soten.eatgo.global.CommonConstant.URL_RESTAURANTS;
+import static com.soten.eatgo.global.CommonConstant.URL_REVIEWS;
+
 @RestController
 public class ReviewController {
 
@@ -22,13 +25,11 @@ public class ReviewController {
     }
 
     @PostMapping("/restaurants/{restaurantId}/reviews")
-    public ResponseEntity<?> create(
-            @PathVariable("restaurantId") Long restaurantId,
-            @Valid @RequestBody Review resource
-    ) throws URISyntaxException {
+    public ResponseEntity<?> create(@PathVariable("restaurantId") Long restaurantId,
+                                    @Valid @RequestBody Review resource) throws URISyntaxException {
         Review review = reviewService.addReview(restaurantId, resource);
-        String url = "/restaurants/" + restaurantId +
-                "/reviews/" + review.getId();
+        String url = URL_RESTAURANTS + restaurantId + URL_REVIEWS + review.getId();
+
         return ResponseEntity.created(new URI(url)).body("{}");
     }
 }

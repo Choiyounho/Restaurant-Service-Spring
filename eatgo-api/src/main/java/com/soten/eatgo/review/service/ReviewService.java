@@ -2,7 +2,6 @@ package com.soten.eatgo.review.service;
 
 import com.soten.eatgo.review.domain.Review;
 import com.soten.eatgo.review.domain.ReviewRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -10,7 +9,6 @@ public class ReviewService {
 
     private ReviewRepository reviewRepository;
 
-    @Autowired
     public ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
     }
