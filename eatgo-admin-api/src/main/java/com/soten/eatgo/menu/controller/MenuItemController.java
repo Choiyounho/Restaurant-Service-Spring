@@ -2,10 +2,7 @@ package com.soten.eatgo.menu.controller;
 
 import com.soten.eatgo.menu.domain.MenuItem;
 import com.soten.eatgo.menu.service.MenuItemService;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +13,12 @@ public class MenuItemController {
 
     public MenuItemController(MenuItemService menuItemService) {
         this.menuItemService = menuItemService;
+    }
+
+    @GetMapping("/restaurants/{restaurantId}/menuitems")
+    public List<MenuItem> list(@PathVariable Long restaurantId) {
+        List<MenuItem> menuItems = menuItemService.getMenuItems(restaurantId);
+        return menuItems;
     }
 
     @PatchMapping("/restaurants/{restaurantId}/menuitems")
