@@ -75,7 +75,8 @@ class RestaurantServiceTest {
         Restaurant restaurant = newInstanceOfRestaurant();
         restaurants.add(restaurant);
 
-        given(restaurantRepository.findAll()).willReturn(restaurants);
+        given(restaurantRepository.findAllByAddressContaining("Guri"))
+                .willReturn(restaurants);
 
         given(restaurantRepository.findById(1004L)).willReturn(Optional.of(restaurant));
 
@@ -93,7 +94,9 @@ class RestaurantServiceTest {
     @Test
     @DisplayName("식당 정보 불러오기")
     void getRestaurants() {
-        List<Restaurant> restaurants = restaurantService.getRestaurants();
+        String region = "Guri";
+
+        List<Restaurant> restaurants = restaurantService.getRestaurants(region);
 
         Restaurant restaurant = restaurants.get(0);
 

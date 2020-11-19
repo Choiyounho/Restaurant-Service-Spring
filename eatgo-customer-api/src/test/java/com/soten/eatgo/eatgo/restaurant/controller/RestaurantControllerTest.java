@@ -46,7 +46,7 @@ class RestaurantControllerTest {
         List<Restaurant> restaurants = new ArrayList<>();
         restaurants.add(newInstanceOfRestaurant(1004L, "Cow Marketplace", "Guri"));
 
-        given(restaurantService.getRestaurants("Seoul")).willReturn(restaurants);
+        given(restaurantService.getRestaurants("Guri")).willReturn(restaurants);
 
         mvc.perform(get("/restaurants?region=Guri"))
                 .andExpect(status().isOk())

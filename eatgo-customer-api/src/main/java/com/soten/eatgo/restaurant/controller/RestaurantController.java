@@ -2,10 +2,7 @@ package com.soten.eatgo.restaurant.controller;
 
 import com.soten.eatgo.restaurant.domain.Restaurant;
 import com.soten.eatgo.restaurant.service.RestaurantService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,8 +22,9 @@ public class RestaurantController {
     }
 
     @GetMapping("/restaurants")
-    public List<Restaurant> list() {
-        return restaurantService.getRestaurants();
+    public List<Restaurant> list(@RequestParam("region") String region) {
+
+        return restaurantService.getRestaurants(region);
     }
 
     @GetMapping("/restaurants/{id}")
