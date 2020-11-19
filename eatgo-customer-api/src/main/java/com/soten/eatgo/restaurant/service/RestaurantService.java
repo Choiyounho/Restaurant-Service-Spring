@@ -27,7 +27,7 @@ public class RestaurantService {
         this.reviewRepository = reviewRepository;
     }
 
-    public List<Restaurant> getRestaurants() {
+    public List<Restaurant> getRestaurants(String region) {
         return restaurantRepository.findAll();
     }
 

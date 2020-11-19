@@ -46,9 +46,9 @@ class RestaurantControllerTest {
         List<Restaurant> restaurants = new ArrayList<>();
         restaurants.add(newInstanceOfRestaurant(1004L, "Cow Marketplace", "Guri"));
 
-        given(restaurantService.getRestaurants()).willReturn(restaurants);
+        given(restaurantService.getRestaurants("Seoul")).willReturn(restaurants);
 
-        mvc.perform(get("/restaurants"))
+        mvc.perform(get("/restaurants?region=Guri"))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .string(containsString("\"id\":1004")))
