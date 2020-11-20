@@ -1,4 +1,4 @@
-package com.soten.eatgo.eatgo.review.service;
+package com.soten.eatgo.review.service;
 
 import com.soten.eatgo.review.domain.Review;
 import com.soten.eatgo.review.domain.ReviewRepository;

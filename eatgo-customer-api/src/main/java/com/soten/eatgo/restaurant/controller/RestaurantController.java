@@ -23,7 +23,6 @@ public class RestaurantController {
 
     @GetMapping("/restaurants")
     public List<Restaurant> list(@RequestParam("region") String region) {
-
         return restaurantService.getRestaurants(region);
     }
 

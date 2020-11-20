@@ -18,13 +18,17 @@ public class RegionService {
     public List<Region> getRegions() {
         List<Region> regions = regionRepository.findAll();
 
-        regions.add(Region.builder().name("Seoul").build());
+        regions.add(Region.builder()
+                          .name("Seoul")
+                          .build());
 
         return regions;
     }
 
     public Region addRegion(String name) {
-        Region region = Region.builder().name(name).build();
+        Region region = Region.builder()
+                              .name(name)
+                              .build();
 
         regionRepository.save(region);
 

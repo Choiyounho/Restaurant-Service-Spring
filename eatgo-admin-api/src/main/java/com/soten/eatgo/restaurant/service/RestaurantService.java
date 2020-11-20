@@ -13,8 +13,7 @@ public class RestaurantService {
 
     private RestaurantRepository restaurantRepository;
 
-    public RestaurantService(RestaurantRepository restaurantRepository
-                             ) {
+    public RestaurantService(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
     }
 

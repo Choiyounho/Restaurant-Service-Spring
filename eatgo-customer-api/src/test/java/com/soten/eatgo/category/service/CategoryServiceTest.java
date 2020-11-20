@@ -31,7 +31,9 @@ class CategoryServiceTest {
     @DisplayName("category 확인")
     void getCategory() {
         List<Category> MockCategories = new ArrayList<>();
-        MockCategories.add(Category.builder().name("Korean Food").build());
+        MockCategories.add(Category.builder()
+                                   .name("Korean Food")
+                                   .build());
 
         given(categoryRepository.findAll()).willReturn(MockCategories);
 

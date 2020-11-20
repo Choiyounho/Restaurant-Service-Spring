@@ -18,13 +18,17 @@ public class CategoryService {
     public List<Category> getCategories() {
         List<Category> categories = categoryRepository.findAll();
 
-        categories.add(Category.builder().name("Seoul").build());
+        categories.add(Category.builder()
+                               .name("Seoul")
+                               .build());
 
         return categories;
     }
 
     public Category addCategory(String name) {
-        Category category = Category.builder().name(name).build();
+        Category category = Category.builder()
+                                    .name(name)
+                                    .build();
 
         categoryRepository.save(category);
 

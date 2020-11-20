@@ -1,4 +1,4 @@
-package com.soten.eatgo.eatgo.review.controller;
+package com.soten.eatgo.review.controller;
 
 import com.soten.eatgo.review.controller.ReviewController;
 import com.soten.eatgo.review.domain.Review;

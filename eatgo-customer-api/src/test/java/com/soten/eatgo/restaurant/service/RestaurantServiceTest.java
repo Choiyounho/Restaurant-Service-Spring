@@ -1,11 +1,10 @@
-package com.soten.eatgo.eatgo.restaurant.service;
+package com.soten.eatgo.restaurant.service;
 
 import com.soten.eatgo.global.exception.RestaurantNotFoundException;
 import com.soten.eatgo.menu.domain.MenuItem;
 import com.soten.eatgo.menu.domain.MenuItemRepository;
 import com.soten.eatgo.restaurant.domain.Restaurant;
 import com.soten.eatgo.restaurant.domain.RestaurantRepository;
-import com.soten.eatgo.restaurant.service.RestaurantService;
 import com.soten.eatgo.review.domain.Review;
 import com.soten.eatgo.review.domain.ReviewRepository;
 import org.junit.jupiter.api.BeforeEach;

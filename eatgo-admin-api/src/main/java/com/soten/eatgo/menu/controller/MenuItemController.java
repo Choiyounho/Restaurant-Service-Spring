@@ -17,8 +17,7 @@ public class MenuItemController {
 
     @GetMapping("/restaurants/{restaurantId}/menuitems")
     public List<MenuItem> list(@PathVariable Long restaurantId) {
-        List<MenuItem> menuItems = menuItemService.getMenuItems(restaurantId);
-        return menuItems;
+        return menuItemService.getMenuItems(restaurantId);
     }
 
     @PatchMapping("/restaurants/{restaurantId}/menuitems")

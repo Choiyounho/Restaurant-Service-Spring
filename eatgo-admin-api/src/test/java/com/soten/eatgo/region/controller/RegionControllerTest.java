@@ -44,6 +44,7 @@ class RegionControllerTest {
     }
 
     @Test
+    @DisplayName("region 필터링")
     void create() throws Exception {
         Region region = Region.builder().name("Seoul").build();
 

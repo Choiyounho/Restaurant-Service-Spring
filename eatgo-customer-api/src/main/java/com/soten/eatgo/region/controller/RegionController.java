@@ -11,14 +11,15 @@ import java.util.List;
 @RestController
 public class RegionController {
 
-    @Autowired
     private RegionService regionService;
+
+    public RegionController(RegionService regionService) {
+        this.regionService = regionService;
+    }
 
     @GetMapping("/regions")
     public List<Region> list() {
-        List<Region> regions = regionService.getRegions();
-
-        return regions;
+        return regionService.getRegions();
     }
 
 }

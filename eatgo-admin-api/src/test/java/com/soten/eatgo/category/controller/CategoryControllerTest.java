@@ -44,6 +44,7 @@ class CategoryControllerTest {
     }
 
     @Test
+    @DisplayName("category 필터링")
     void create() throws Exception {
         Category category = Category.builder().name("Korean Food").build();
 

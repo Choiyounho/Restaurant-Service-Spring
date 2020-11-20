@@ -11,14 +11,15 @@ import java.util.List;
 @RestController
 public class CategoryController {
 
-    @Autowired
     private CategoryService categoryService;
+
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @GetMapping("/categories")
     public List<Category> list() {
-        List<Category> categories = categoryService.getCategories();
-
-        return categories;
+        return categoryService.getCategories();
     }
 
 }

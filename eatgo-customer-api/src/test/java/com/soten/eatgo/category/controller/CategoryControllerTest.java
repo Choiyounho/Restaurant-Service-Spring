@@ -31,7 +31,9 @@ class CategoryControllerTest {
     @DisplayName("/categories 필터링 된 목록 출력")
     void list() throws Exception {
         List<Category> categories = new ArrayList<>();
-        categories.add(Category.builder().name("Korean Food").build());
+        categories.add(Category.builder()
+                               .name("Korean Food")
+                               .build());
 
         given(categoryService.getCategories()).willReturn(categories);
 

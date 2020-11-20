@@ -1,8 +1,7 @@
-package com.soten.eatgo.eatgo.restaurant.controller;
+package com.soten.eatgo.restaurant.controller;
 
 import com.soten.eatgo.global.exception.RestaurantNotFoundException;
 import com.soten.eatgo.menu.domain.MenuItem;
-import com.soten.eatgo.restaurant.controller.RestaurantController;
 import com.soten.eatgo.restaurant.domain.Restaurant;
 import com.soten.eatgo.restaurant.service.RestaurantService;
 import com.soten.eatgo.review.domain.Review;

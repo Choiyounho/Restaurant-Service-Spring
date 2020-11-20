@@ -28,14 +28,12 @@ public class RestaurantService {
     }
 
     public List<Restaurant> getRestaurants(String region) {
-        List<Restaurant> restaurants = restaurantRepository.findAllByAddressContaining(region);
-
-        return restaurants;
+        return restaurantRepository.findAllByAddressContaining(region);
     }
 
     public Restaurant getRestaurant(Long id) {
         Restaurant restaurant = restaurantRepository.findById(id)
-                .orElseThrow(() -> new RestaurantNotFoundException(id));
+                                                    .orElseThrow(() -> new RestaurantNotFoundException(id));
 
         List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
         restaurant.setMenuItems(menuItems);
