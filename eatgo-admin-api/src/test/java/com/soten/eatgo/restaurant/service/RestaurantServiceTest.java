@@ -39,6 +39,7 @@ class RestaurantServiceTest {
     private Restaurant newInstanceOfRestaurant() {
         return Restaurant.builder()
                 .id(1004L)
+                .categoryId(1L)
                 .name("Bob zip")
                 .address("Seoul")
                 .build();

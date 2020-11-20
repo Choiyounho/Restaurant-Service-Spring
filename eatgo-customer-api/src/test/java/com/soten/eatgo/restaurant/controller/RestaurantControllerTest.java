@@ -31,9 +31,10 @@ class RestaurantControllerTest {
     @MockBean
     private RestaurantService restaurantService;
 
-    private Restaurant newInstanceOfRestaurant(Long id, String name, String address) {
+    private Restaurant newInstanceOfRestaurant(Long id, String name, String address, Long categoryId) {
         return Restaurant.builder()
                 .id(id)
+                .categoryId(categoryId)
                 .name(name)
                 .address(address)
                 .build();
@@ -43,11 +44,11 @@ class RestaurantControllerTest {
     @DisplayName("/restaurants : 전체 식당 목록 불러오기")
     void list() throws Exception {
         List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(newInstanceOfRestaurant(1004L, "Cow Marketplace", "Guri"));
+        restaurants.add(newInstanceOfRestaurant(1004L, "Cow Marketplace", "Guri", 1L));
 
-        given(restaurantService.getRestaurants("Guri")).willReturn(restaurants);
+        given(restaurantService.getRestaurants("Guri", 1L)).willReturn(restaurants);
 
-        mvc.perform(get("/restaurants?region=Guri"))
+        mvc.perform(get("/restaurants?region=Guri&category=1"))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .string(containsString("\"id\":1004")))
@@ -59,9 +60,9 @@ class RestaurantControllerTest {
     @Test
     @DisplayName("/restaurants/{id} : id 식당 정보 상세보기")
     void detailWithExisted() throws Exception {
-        Restaurant restaurant = newInstanceOfRestaurant(1004L, "Cow Marketplace", "Guri");
+        Restaurant restaurant = newInstanceOfRestaurant(1004L, "Cow Marketplace", "Guri", 1L);
 
-        Restaurant restaurant1 = newInstanceOfRestaurant(2020L, "Omogari Kimchi", "Guri");
+        Restaurant restaurant1 = newInstanceOfRestaurant(2020L, "Omogari Kimchi", "Guri", 1L);
 
         restaurant.setMenuItems(Arrays.asList(MenuItem.builder()
                 .name("Kimchi")

@@ -30,11 +30,12 @@ class RestaurantControllerTest {
     @MockBean
     private RestaurantService restaurantService;
 
-    private Restaurant newInstanceOfRestaurant(Long id, String name, String address) {
+    private Restaurant newInstanceOfRestaurant(Long id, String name, String address, Long categoryId) {
         return Restaurant.builder()
                 .id(id)
                 .name(name)
                 .address(address)
+                .categoryId(categoryId)
                 .build();
     }
 
@@ -42,7 +43,7 @@ class RestaurantControllerTest {
     @DisplayName("/restaurants : 전체 식당 목록 불러오기")
     void list() throws Exception {
         List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(newInstanceOfRestaurant(1004L, "Cow Marketplace", "Guri"));
+        restaurants.add(newInstanceOfRestaurant(1004L, "Cow Marketplace", "Guri", 1L));
 
         given(restaurantService.getRestaurants()).willReturn(restaurants);
 
@@ -58,9 +59,9 @@ class RestaurantControllerTest {
     @Test
     @DisplayName("/restaurants/{id} : id 식당 정보 불러오기")
     void detailWithExisted() throws Exception {
-        Restaurant restaurant = newInstanceOfRestaurant(1004L, "Cow Marketplace", "Guri");
+        Restaurant restaurant = newInstanceOfRestaurant(1004L, "Cow Marketplace", "Guri", 1L);
 
-        Restaurant restaurant1 = newInstanceOfRestaurant(2020L, "Omogari Kimchi", "Guri");
+        Restaurant restaurant1 = newInstanceOfRestaurant(2020L, "Omogari Kimchi", "Guri", 1L);
 
         given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
         given(restaurantService.getRestaurant(2020L)).willReturn(restaurant1);
@@ -90,12 +91,12 @@ class RestaurantControllerTest {
     void createWithValidData() throws Exception {
         given(restaurantService.addRestaurant(any())).will(invocation -> {
             Restaurant restaurant = invocation.getArgument(0);
-            return newInstanceOfRestaurant(1234L, restaurant.getName(), restaurant.getAddress());
+            return newInstanceOfRestaurant(1234L, restaurant.getName(), restaurant.getAddress(), 1L);
         });
 
         mvc.perform(post("/restaurants")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"BeRyong\",\"address\":\"Busan\"}\n"))
+                .content("{\"categoryId\" : 1,\"name\":\"BeRyong\",\"address\":\"Busan\"}\n"))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("location", "/restaurants/1234"))
                 .andExpect(content().string("{}"));
@@ -108,7 +109,7 @@ class RestaurantControllerTest {
     void createWithInvalidData() throws Exception {
         mvc.perform(post("/restaurants")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"BeRyong\",\"address\":\"\"}"))
+                .content("{\"categoryId\" : 1,\"name\":\"BeRyong\",\"address\":\"\"}"))
                 .andExpect(status().isBadRequest());
     }
 
@@ -117,7 +118,7 @@ class RestaurantControllerTest {
     void updateWithValidData() throws Exception {
         mvc.perform(patch("/restaurants/1004")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"YH Bar\",\"address\":\"Guri\"}"))
+                .content("{\"categoryId\" : 1,\"name\":\"YH Bar\",\"address\":\"Guri\"}"))
                 .andExpect(status().isOk());
 
         verify(restaurantService).updateRestaurant(1004L, "YH Bar", "Guri");
@@ -128,7 +129,7 @@ class RestaurantControllerTest {
     void updateWithoutName() throws Exception {
         mvc.perform(patch("/restaurants/1004")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"\",\"address\":\"Busan\"}"))
+                .content("{\"categoryId\" : 1,\"name\":\"\",\"address\":\"Busan\"}"))
                 .andExpect(status().isBadRequest());
     }
 

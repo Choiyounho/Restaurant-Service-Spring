@@ -65,6 +65,7 @@ class RestaurantServiceTest {
         return Restaurant.builder()
                 .id(1004L)
                 .name("Bob zip")
+                .categoryId(1L)
                 .address("Seoul")
                 .build();
     }
@@ -74,7 +75,7 @@ class RestaurantServiceTest {
         Restaurant restaurant = newInstanceOfRestaurant();
         restaurants.add(restaurant);
 
-        given(restaurantRepository.findAllByAddressContaining("Guri"))
+        given(restaurantRepository.findAllByAddressContainingAndCategoryId("Guri", 1L))
                 .willReturn(restaurants);
 
         given(restaurantRepository.findById(1004L)).willReturn(Optional.of(restaurant));
@@ -95,7 +96,9 @@ class RestaurantServiceTest {
     void getRestaurants() {
         String region = "Guri";
 
-        List<Restaurant> restaurants = restaurantService.getRestaurants(region);
+        long categoryId = 1L;
+
+        List<Restaurant> restaurants = restaurantService.getRestaurants(region, categoryId);
 
         Restaurant restaurant = restaurants.get(0);
 
