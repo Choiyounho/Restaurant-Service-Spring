@@ -20,8 +20,7 @@ public class UserController {
 
     @GetMapping("/users")
     public List<User> list() {
-        List<User> users = userService.getUsers();
-        return users;
+        return userService.getUsers();
     }
 
     @PostMapping("/users")
@@ -44,6 +43,7 @@ public class UserController {
         Long level = resource.getLevel();
 
         userService.updateUser(id, email, name, level);
+
         return "{}";
     }
 
