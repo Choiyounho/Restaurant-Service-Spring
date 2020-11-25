@@ -83,7 +83,6 @@ class RestaurantControllerTest {
         mvc.perform(get("/restaurants/404"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string("{}"));
-
     }
 
     @Test

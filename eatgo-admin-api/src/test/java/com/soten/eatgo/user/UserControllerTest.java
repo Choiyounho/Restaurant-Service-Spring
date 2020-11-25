@@ -65,7 +65,6 @@ class UserControllerTest {
                 .content("{\"email\" : \"maxosa@naver.com\", \"name\" : \"Administrator\"}"))
                 .andExpect(status().isCreated());
 
-
         verify(userService).addUser(email, name);
     }
 
