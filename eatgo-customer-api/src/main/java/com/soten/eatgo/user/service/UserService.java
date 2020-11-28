@@ -1,9 +1,12 @@
-package com.soten.eatgo.user;
+package com.soten.eatgo.user.service;
 
 import com.soten.eatgo.global.exception.EmailExistedException;
+import com.soten.eatgo.global.exception.EmailNotExistedException;
+import com.soten.eatgo.global.exception.PasswordWrongException;
 import com.soten.eatgo.user.domain.User;
 import com.soten.eatgo.user.domain.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,8 +18,11 @@ public class UserService {
 
     private UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    private PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User registerUser(String email, String name, String password) {
@@ -26,7 +32,6 @@ public class UserService {
             throw new EmailExistedException(email);
         }
 
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(password);
 
         User user = User.builder()
@@ -38,6 +43,16 @@ public class UserService {
                 .build();
 
         return userRepository.save(user);
+    }
+
+    public User authenticate(String email, String password) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new EmailNotExistedException(email));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new PasswordWrongException();
+        }
+
+        return user;
     }
 
 }

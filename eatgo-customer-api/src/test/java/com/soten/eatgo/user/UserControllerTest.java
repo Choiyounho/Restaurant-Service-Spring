@@ -1,6 +1,8 @@
 package com.soten.eatgo.user;
 
+import com.soten.eatgo.user.controller.UserController;
 import com.soten.eatgo.user.domain.User;
+import com.soten.eatgo.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(SessionController.class)
-class SessionControllerTest {
+@WebMvcTest(UserController.class)
+class UserControllerTest {
 
     @Autowired
     MockMvc mvc;

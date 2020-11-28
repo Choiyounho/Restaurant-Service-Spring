@@ -1,6 +1,7 @@
-package com.soten.eatgo.user;
+package com.soten.eatgo.user.controller;
 
 import com.soten.eatgo.user.domain.User;
+import com.soten.eatgo.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

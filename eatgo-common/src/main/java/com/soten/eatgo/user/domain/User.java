@@ -1,5 +1,6 @@
 package com.soten.eatgo.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -10,7 +11,6 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,12 +20,15 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Setter
     @NotEmpty
     private String email;
 
+    @Setter
     @NotEmpty
     private String name;
 
+    @Setter
     @NotNull
     private Long level;
 
@@ -41,5 +44,13 @@ public class User {
 
     public void deactivate() {
         level = 0L;
+    }
+
+    @JsonIgnore
+    public String getAccessToken() {
+        if (password == null) {
+            return "";
+        }
+        return password.substring(0, 10);
     }
 }

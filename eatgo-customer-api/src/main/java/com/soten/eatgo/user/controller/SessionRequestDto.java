@@ -1,4 +1,4 @@
-package com.soten.eatgo.user.service;
+package com.soten.eatgo.user.controller;
 
 import lombok.Data;
 
