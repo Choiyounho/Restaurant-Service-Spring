@@ -1,6 +1,8 @@
 package com.soten.eatgo.user.controller;
 
 import com.soten.eatgo.user.domain.User;
+import com.soten.eatgo.user.dto.UserLoginRequestDto;
+import com.soten.eatgo.user.dto.UserLoginResponseDto;
 import com.soten.eatgo.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +22,7 @@ public class SessionController {
     }
 
     @PostMapping("/session")
-    public ResponseEntity<SessionResponseDto> create(
-            @RequestBody SessionRequestDto resource) throws URISyntaxException {
+    public ResponseEntity<UserLoginResponseDto> create(@RequestBody UserLoginRequestDto resource) throws URISyntaxException {
         String email = resource.getEmail();
         String password = resource.getPassword();
 
@@ -31,7 +32,7 @@ public class SessionController {
 
         String url = "/session";
         return ResponseEntity.created(new URI(url))
-                             .body(SessionResponseDto.builder()
+                             .body(UserLoginResponseDto.builder()
                                      .accessToken(accessToken)
                                      .build());
     }

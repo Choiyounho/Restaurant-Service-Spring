@@ -1,8 +1,8 @@
-package com.soten.eatgo.user;
+package com.soten.eatgo.user.controller;
 
-import com.soten.eatgo.user.controller.UserController;
 import com.soten.eatgo.user.domain.User;
 import com.soten.eatgo.user.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +25,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(UserController.class)
 class UserControllerTest {
 
+    private String email;
+    private String name;
+
     @Autowired
     private MockMvc mvc;
 
     @MockBean
     private UserService userService;
 
+    @BeforeEach
+    void setUp() {
+        email = "maxosa@naver.com";
+        name = "younho";
+    }
+
     @Test
     @DisplayName("유저 목록")
     void list() throws Exception {
         List<User> users = new ArrayList<>();
-        users.add(User.builder().email("maxosa@naver.com")
-                .name("younho")
+        users.add(User.builder().email(email)
+                .name(name)
                 .level(1L)
                 .build());
 
@@ -50,8 +59,7 @@ class UserControllerTest {
     @Test
     @DisplayName("유저 생성")
     void create() throws Exception {
-        String email = "maxosa@naver.com";
-        String name = "Administrator";
+        name = "Administrator";
 
         User user = User.builder()
                 .email(email)
@@ -78,8 +86,8 @@ class UserControllerTest {
                 .andExpect(status().isOk());
 
         Long id = 1004L;
-        String email = "maxosa@naver.com";
-        String name = "Administrator";
+
+        name = "Administrator";
         Long level = 100L;
 
         verify(userService).updateUser(eq(id), eq(email), eq(name), eq(level));

@@ -9,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
 import java.util.Optional;
 
 @Service
@@ -26,27 +25,26 @@ public class UserService {
     }
 
     public User registerUser(String email, String name, String password) {
+        validateUserEmail(email);
+
+        String encodedPassword = passwordEncoder.encode(password);
+
+        User user = User.register(email, name, encodedPassword);
+
+        return userRepository.save(user);
+    }
+
+    private void validateUserEmail(String email) {
         Optional<User> existed = userRepository.findByEmail(email);
 
         if (existed.isPresent()) {
             throw new EmailExistedException(email);
         }
-
-        String encodedPassword = passwordEncoder.encode(password);
-
-        User user = User.builder()
-                .id(1004L)
-                .email(email)
-                .name(name)
-                .password(encodedPassword)
-                .level(1L)
-                .build();
-
-        return userRepository.save(user);
     }
 
     public User authenticate(String email, String password) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new EmailNotExistedException(email));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EmailNotExistedException(email));
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new PasswordWrongException();

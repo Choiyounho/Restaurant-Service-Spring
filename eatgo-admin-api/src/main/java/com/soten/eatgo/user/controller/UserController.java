@@ -30,14 +30,13 @@ public class UserController {
 
         User user = userService.addUser(email, name);
 
-        String url = "/users/1" + user.getId();
+        String url = "/users/" + user.getId();
 
         return ResponseEntity.created(new URI(url)).body("{}");
     }
 
     @PatchMapping("/users/{id}")
-    public String update(@PathVariable("id") Long id,
-                         @RequestBody User resource) {
+    public String update(@PathVariable("id") Long id, @RequestBody User resource) {
         String email = resource.getEmail();
         String name = resource.getName();
         Long level = resource.getLevel();

@@ -34,7 +34,9 @@ class SessionControllerTest {
         String email = "maxosa@naver.com";
         String password = "test";
 
-        User mockUser = User.builder().password("ACCESSTOKEN").build();
+        User mockUser = User.builder()
+                .password("ACCESSTOKEN")
+                .build();
 
         given(userService.authenticate(email, password)).willReturn(mockUser);
 
@@ -89,4 +91,5 @@ class SessionControllerTest {
 
         verify(userService).authenticate(eq("maxosa@naver.com"), eq("x"));
     }
+
 }

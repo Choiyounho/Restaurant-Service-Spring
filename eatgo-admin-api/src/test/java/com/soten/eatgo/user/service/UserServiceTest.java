@@ -99,7 +99,6 @@ class UserServiceTest {
                 .id(id)
                 .email("admin@naver.com")
                 .name("Customer")
-                .level(100L)
                 .build();
 
         given(userRepository.findById(id)).willReturn(Optional.of(mockUser));
@@ -110,10 +109,6 @@ class UserServiceTest {
 
         assertThat(user.getName()).isEqualTo("Customer");
         assertThat(user.isAdmin()).isFalse();
-        assertThat(user.isActive()).isFalse();
-
-        user.deactivate();
-
         assertThat(user.isActive()).isFalse();
     }
 

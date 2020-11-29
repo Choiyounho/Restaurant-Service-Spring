@@ -14,11 +14,15 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .cors().disable()
-                .formLogin().disable()
-                .headers().frameOptions().disable();
+        http.csrf()
+                .disable()
+                .cors()
+                .disable()
+                .formLogin()
+                .disable()
+                .headers()
+                .frameOptions()
+                .disable();
     }
 
     @Bean

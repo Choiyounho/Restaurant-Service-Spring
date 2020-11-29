@@ -1,4 +1,4 @@
-package com.soten.eatgo.user.controller;
+package com.soten.eatgo.user.service;
 
 import com.soten.eatgo.global.exception.EmailExistedException;
 import com.soten.eatgo.global.exception.EmailNotExistedException;
@@ -23,6 +23,10 @@ import static org.mockito.Mockito.verify;
 
 class UserServiceTest {
 
+    private String email;
+    private String name;
+    private String password;
+
     private UserService userService;
 
     @Mock
@@ -35,16 +39,16 @@ class UserServiceTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
+        email = "maxosa@naver.com";
+        name = "younho";
+        password = "test";
+
         userService = new UserService(userRepository, passwordEncoder);
     }
 
     @Test
     @DisplayName("회원등록")
     void registerUser() {
-        String email = "maxosa@naver.com";
-        String name = "younho";
-        String password = "test";
-
         userService.registerUser(email, name, password);
 
         verify(userRepository).save(any());
@@ -53,10 +57,6 @@ class UserServiceTest {
     @Test
     @DisplayName("회원등록 실패")
     void registerUserWithExistedEmail() {
-        String email = "maxosa@naver.com";
-        String name = "younho";
-        String password = "test";
-
         User user = User.builder().build();
 
         given(userRepository.findByEmail(email)).willReturn(Optional.ofNullable(user));
@@ -67,9 +67,6 @@ class UserServiceTest {
 
     @Test
     void authenticateWithValidAttributes() {
-        String email = "maxosa@naver.com";
-        String password = "test";
-
         User mockUser = User.builder()
                 .email(email)
                 .build();
@@ -86,8 +83,7 @@ class UserServiceTest {
     @Test
     @DisplayName("이메일이 틀린 경우")
     void authenticateWithNotExistedEmail() {
-        String email = "x@naver.com";
-        String password = "test";
+        email = "x@naver.com";
 
         given(userRepository.findByEmail(email)).willReturn(Optional.empty());
 
@@ -98,8 +94,7 @@ class UserServiceTest {
     @Test
     @DisplayName("비밀번호가 틀린 경우")
     void authenticateWithWrongPassword() {
-        String email = "maxosa@naver.com";
-        String password = "x";
+        password = "x";
 
         User mockUser = User.builder()
                 .email(email)
