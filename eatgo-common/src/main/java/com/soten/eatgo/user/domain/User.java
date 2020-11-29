@@ -6,8 +6,7 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @Entity
 @Getter
@@ -53,4 +52,5 @@ public class User {
         }
         return password.substring(0, 10);
     }
+
 }

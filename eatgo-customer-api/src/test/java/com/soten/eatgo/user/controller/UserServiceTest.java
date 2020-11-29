@@ -110,7 +110,7 @@ class UserServiceTest {
         given(passwordEncoder.matches(any(), any())).willReturn(false);
 
         assertThatExceptionOfType(PasswordWrongException.class)
-                .isThrownBy(() -> { userService.authenticate(email, password);} );
+                .isThrownBy(() -> userService.authenticate(email, password));
     }
 
 }

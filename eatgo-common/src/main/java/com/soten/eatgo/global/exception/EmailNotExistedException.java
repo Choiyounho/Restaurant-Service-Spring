@@ -1,11 +1,11 @@
 package com.soten.eatgo.global.exception;
 
-import static com.soten.eatgo.global.exception.ExceptionMessage.EMAIL_NOT_REGISTERED;
+import static com.soten.eatgo.global.exception.ExceptionMessage.MESSAGE_EMAIL_NOT_REGISTERED;
 
-public class EmailNotExistedException extends RuntimeException{
+public class EmailNotExistedException extends IllegalArgumentException {
 
     public EmailNotExistedException(String email) {
-        super(EMAIL_NOT_REGISTERED + email);
+        super(MESSAGE_EMAIL_NOT_REGISTERED + email);
     }
 
 }

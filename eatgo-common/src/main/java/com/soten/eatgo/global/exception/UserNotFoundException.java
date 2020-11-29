@@ -1,10 +1,12 @@
 package com.soten.eatgo.global.exception;
 
 
-public class UserNotFoundException extends RuntimeException {
+import static com.soten.eatgo.global.exception.ExceptionMessage.MESSAGE_NOT_FOUND_USER;
+
+public class UserNotFoundException extends IllegalArgumentException {
 
     public UserNotFoundException(Long id) {
-        super(ExceptionMessage.MESSAGE_NOT_FOUND_USER + id);
+        super(MESSAGE_NOT_FOUND_USER + id);
     }
 
 }

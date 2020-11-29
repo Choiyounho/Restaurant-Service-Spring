@@ -1,4 +1,4 @@
-package com.soten.eatgo.user;
+package com.soten.eatgo.user.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,4 +25,5 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
