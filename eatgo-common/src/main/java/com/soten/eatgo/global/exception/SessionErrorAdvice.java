@@ -16,11 +16,11 @@ public class SessionErrorAdvice {
         return "{}";
     }
 
-
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(PasswordWrongException.class)
     public String handlePasswordWrong() {
         return "{}";
     }
+
 }

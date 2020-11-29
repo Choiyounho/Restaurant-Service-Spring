@@ -5,7 +5,6 @@ import com.soten.eatgo.global.exception.EmailNotExistedException;
 import com.soten.eatgo.global.exception.PasswordWrongException;
 import com.soten.eatgo.user.domain.User;
 import com.soten.eatgo.user.domain.UserRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

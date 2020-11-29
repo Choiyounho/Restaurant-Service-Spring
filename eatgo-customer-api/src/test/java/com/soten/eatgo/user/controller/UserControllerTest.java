@@ -1,4 +1,4 @@
-package com.soten.eatgo.user;
+package com.soten.eatgo.user.controller;
 
 import com.soten.eatgo.user.controller.UserController;
 import com.soten.eatgo.user.domain.User;

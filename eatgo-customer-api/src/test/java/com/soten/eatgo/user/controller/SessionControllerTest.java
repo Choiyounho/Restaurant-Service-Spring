@@ -1,4 +1,4 @@
-package com.soten.eatgo.user;
+package com.soten.eatgo.user.controller;
 
 import com.soten.eatgo.global.exception.EmailNotExistedException;
 import com.soten.eatgo.global.exception.PasswordWrongException;
@@ -89,6 +89,4 @@ class SessionControllerTest {
 
         verify(userService).authenticate(eq("maxosa@naver.com"), eq("x"));
     }
-
-
 }
