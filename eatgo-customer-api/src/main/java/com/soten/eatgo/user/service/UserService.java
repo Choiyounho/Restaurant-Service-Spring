@@ -37,9 +37,9 @@ public class UserService {
     private void validateUserEmail(String email) {
         Optional<User> existed = userRepository.findByEmail(email);
 
-        if (existed.isPresent()) {
+        existed.ifPresent(user -> {
             throw new EmailExistedException(email);
-        }
+        });
     }
 
     public User authenticate(String email, String password) {
