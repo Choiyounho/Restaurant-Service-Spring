@@ -23,13 +23,11 @@ public class Review {
 
     private Long restaurantId;
 
-    @NotEmpty
     private String name;
 
     @Min(0)
     @Max(5)
     private Integer score;
-
 
     @NotEmpty
     private String description;

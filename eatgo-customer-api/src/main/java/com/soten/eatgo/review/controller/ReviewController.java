@@ -2,7 +2,9 @@ package com.soten.eatgo.review.controller;
 
 import com.soten.eatgo.review.domain.Review;
 import com.soten.eatgo.review.service.ReviewService;
+import io.jsonwebtoken.Claims;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,9 +27,13 @@ public class ReviewController {
     }
 
     @PostMapping("/restaurants/{restaurantId}/reviews")
-    public ResponseEntity<?> create(@PathVariable("restaurantId") Long restaurantId,
+    public ResponseEntity<?> create(Authentication authentication,
+                                    @PathVariable("restaurantId") Long restaurantId,
                                     @Valid @RequestBody Review resource) throws URISyntaxException {
-        Review review = reviewService.addReview(restaurantId, resource);
+        Claims claims = (Claims) authentication.getPrincipal();
+
+        Review review = reviewService.addReview(restaurantId, claims.get("name", String.class),
+                resource.getScore(), resource.getDescription());
         String url = URL_RESTAURANTS + restaurantId + URL_REVIEWS + review.getId();
 
         return ResponseEntity.created(new URI(url)).body("{}");

@@ -5,7 +5,6 @@ import com.soten.eatgo.user.dto.UserLoginRequestDto;
 import com.soten.eatgo.user.dto.UserLoginResponseDto;
 import com.soten.eatgo.user.service.UserService;
 import com.soten.eatgo.utils.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

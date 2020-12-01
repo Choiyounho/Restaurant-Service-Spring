@@ -35,7 +35,7 @@ class ReviewServiceTest {
                 .description("Tasty good")
                 .build();
 
-        reviewService.addReview(1004L, review);
+        reviewService.addReview(1004L, "YH", 3, "Tasty good");
 
         verify(reviewRepository).save(any());
     }
