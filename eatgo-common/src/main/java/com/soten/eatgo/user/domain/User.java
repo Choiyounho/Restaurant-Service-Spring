@@ -1,13 +1,13 @@
 package com.soten.eatgo.user.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -34,6 +34,9 @@ public class User {
 
     private String password;
 
+    @Setter
+    private Long restaurantId;
+
     private User(String email, String name, Long level, String password) {
         this.email = email;
         this.name = name;
@@ -56,5 +59,15 @@ public class User {
     public void deactivate() {
         level = 0L;
     }
+
+    public void setRestaurantId(Long restaurantId) {
+        level = 50L;
+        this.restaurantId = restaurantId;
+    }
+
+    public boolean isRestaurantOwner() {
+        return level == 50L;
+    }
+
 
 }

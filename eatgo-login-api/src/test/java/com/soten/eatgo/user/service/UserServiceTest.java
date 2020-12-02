@@ -5,7 +5,6 @@ import com.soten.eatgo.global.exception.EmailNotExistedException;
 import com.soten.eatgo.global.exception.PasswordWrongException;
 import com.soten.eatgo.user.domain.User;
 import com.soten.eatgo.user.domain.UserRepository;
-import com.soten.eatgo.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,22 +46,46 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("회원등록")
-    void registerUser() {
-        userService.registerUser(email, name, password);
+    void authenticateWithValidAttributes() {
+        User mockUser = User.builder()
+                .email(email)
+                .build();
 
-        verify(userRepository).save(any());
+        given(userRepository.findByEmail(email)).willReturn(Optional.of(mockUser));
+
+        given(passwordEncoder.matches(any(), any())).willReturn(true);
+
+        User user = userService.authenticate(email, password);
+
+        assertThat(user.getEmail()).isEqualTo(email);
     }
 
     @Test
-    @DisplayName("회원등록 실패")
-    void registerUserWithExistedEmail() {
-        User user = User.builder().build();
+    @DisplayName("이메일이 틀린 경우")
+    void authenticateWithNotExistedEmail() {
+        email = "x@naver.com";
 
-        given(userRepository.findByEmail(email)).willReturn(Optional.ofNullable(user));
+        given(userRepository.findByEmail(email)).willReturn(Optional.empty());
 
-        assertThatExceptionOfType(EmailExistedException.class)
-                .isThrownBy(() -> { userService.registerUser(email, name, password); });
+        assertThatExceptionOfType(EmailNotExistedException.class)
+                .isThrownBy(() -> { userService.authenticate(email, password);} );
+    }
+
+    @Test
+    @DisplayName("비밀번호가 틀린 경우")
+    void authenticateWithWrongPassword() {
+        password = "x";
+
+        User mockUser = User.builder()
+                .email(email)
+                .build();
+
+        given(userRepository.findByEmail(email)).willReturn(Optional.of(mockUser));
+
+        given(passwordEncoder.matches(any(), any())).willReturn(false);
+
+        assertThatExceptionOfType(PasswordWrongException.class)
+                .isThrownBy(() -> userService.authenticate(email, password));
     }
 
 }

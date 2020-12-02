@@ -24,23 +24,15 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User registerUser(String email, String name, String password) {
-        validateUserEmail(email);
+    public User authenticate(String email, String password) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EmailNotExistedException(email));
 
-        String encodedPassword = passwordEncoder.encode(password);
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new PasswordWrongException();
+        }
 
-        User user = User.register(email, name, encodedPassword);
-
-        return userRepository.save(user);
+        return user;
     }
-
-    private void validateUserEmail(String email) {
-        Optional<User> existed = userRepository.findByEmail(email);
-
-        existed.ifPresent(user -> {
-            throw new EmailExistedException(email);
-        });
-    }
-    
 
 }
