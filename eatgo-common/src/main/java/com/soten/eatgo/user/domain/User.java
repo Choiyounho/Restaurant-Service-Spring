@@ -34,7 +34,6 @@ public class User {
 
     private String password;
 
-    @Setter
     private Long restaurantId;
 
     private User(String email, String name, Long level, String password) {
@@ -68,6 +67,5 @@ public class User {
     public boolean isRestaurantOwner() {
         return level == 50L;
     }
-
 
 }
