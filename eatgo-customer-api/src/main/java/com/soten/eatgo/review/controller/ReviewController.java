@@ -27,15 +27,15 @@ public class ReviewController {
     }
 
     @PostMapping("/restaurants/{restaurantId}/reviews")
-    public ResponseEntity<?> create(Authentication authentication,
-                                    @PathVariable("restaurantId") Long restaurantId,
-                                    @Valid @RequestBody Review resource) throws URISyntaxException {
+    public ResponseEntity<Review> create(Authentication authentication, @PathVariable("restaurantId") Long restaurantId,
+                                    @Valid @RequestBody Review reviewData) throws URISyntaxException {
         Claims claims = (Claims) authentication.getPrincipal();
 
         Review review = reviewService.addReview(restaurantId, claims.get("name", String.class),
-                resource.getScore(), resource.getDescription());
+                reviewData.getScore(), reviewData.getDescription());
+
         String url = URL_RESTAURANTS + restaurantId + URL_REVIEWS + review.getId();
 
-        return ResponseEntity.created(new URI(url)).body("{}");
+        return ResponseEntity.created(new URI(url)).body(review);
     }
 }

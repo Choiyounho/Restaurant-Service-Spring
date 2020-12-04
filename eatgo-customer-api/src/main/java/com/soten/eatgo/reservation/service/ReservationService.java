@@ -20,7 +20,7 @@ public class ReservationService {
         Reservation reservation = Reservation.builder()
                 .restaurantId(restaurantId)
                 .userId(userId)
-                .name(name)
+                .userName(name)
                 .date(date)
                 .time(time)
                 .partySize(partySize)

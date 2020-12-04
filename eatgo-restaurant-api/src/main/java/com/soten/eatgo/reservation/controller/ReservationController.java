@@ -24,9 +24,7 @@ public class ReservationController {
 
         Long restaurantId = claims.get("restaurantId", Long.class);
 
-        List<Reservation> reservations = reservationService.getReservations(restaurantId);
-
-        return reservations;
+        return reservationService.getReservations(restaurantId);
     }
 
 }

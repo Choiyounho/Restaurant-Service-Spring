@@ -45,7 +45,7 @@ class ReservationServiceTest {
 
         Reservation reservation = reservationService.addReservation(restaurantId, userId, name, date, time, partySize);
 
-        assertThat(reservation.getName()).isEqualTo(name);
+        assertThat(reservation.getUserName()).isEqualTo(name);
 
         verify(reservationRepository).save(any(Reservation.class));
     }

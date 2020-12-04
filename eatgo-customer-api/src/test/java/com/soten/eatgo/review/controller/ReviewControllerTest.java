@@ -31,8 +31,10 @@ class ReviewControllerTest {
     @Test
     @DisplayName("/restaurants/{restaurantId}/reviews/{reviewId} : 리뷰 작성 성공")
     public void createWithValidAttributes() throws Exception {
-        given(reviewService.addReview(1L, "John", 3, "Tasty good")).willReturn(
-                Review.builder().id(1004L).build());
+        given(reviewService.addReview(1L, "John", 3, "Tasty good"))
+                .willReturn(Review.builder()
+                        .id(1004L)
+                        .build());
 
         String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEwMDQsIm5hbWUiOiJKb2huIn0.8hm6ZOJykSINHxL-rf0yV882fApL3hyQ9-WGlJUyo2A";
 
@@ -54,7 +56,6 @@ class ReviewControllerTest {
                 .content("{}"))
                 .andExpect(status().isBadRequest());
         verify(reviewService, never()).addReview(any(), any(), any(), any());
-
     }
 
 }

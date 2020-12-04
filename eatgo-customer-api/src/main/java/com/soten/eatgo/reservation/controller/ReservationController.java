@@ -24,8 +24,7 @@ public class ReservationController {
     }
 
     @PostMapping(value = "/restaurants/{restaurantId}/reservations")
-    public ResponseEntity<?> create(Authentication authentication,
-                                    @PathVariable Long restaurantId,
+    public ResponseEntity<Reservation> create(Authentication authentication, @PathVariable Long restaurantId,
                                     @Valid @RequestBody Reservation resource) throws URISyntaxException {
         Claims claims = (Claims) authentication.getPrincipal();
 
@@ -38,7 +37,7 @@ public class ReservationController {
         Reservation reservation = reservationService.addReservation(restaurantId, userId, name, date, time, partySize);
 
         String url = "/restaurants/" + restaurantId + "/reservations/" + reservation.getId();
-        return ResponseEntity.created(new URI(url)).body("{}");
+        return ResponseEntity.created(new URI(url)).body(reservation);
     }
 
 }

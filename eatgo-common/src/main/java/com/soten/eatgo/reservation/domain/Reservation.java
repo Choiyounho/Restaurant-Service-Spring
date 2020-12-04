@@ -25,7 +25,7 @@ public class Reservation {
 
     private Long userId;
 
-    private String name;
+    private String userName;
 
     @NotEmpty
     private String date;

@@ -20,7 +20,8 @@ public class ReviewService {
                 .score(score)
                 .description(description)
                 .build();
-        review.setRestaurantId(restaurantId);
+
         return reviewRepository.save(review);
     }
+
 }

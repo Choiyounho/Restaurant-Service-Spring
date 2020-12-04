@@ -1,8 +1,6 @@
 package com.soten.eatgo.review.service;
 
-import com.soten.eatgo.review.domain.Review;
 import com.soten.eatgo.review.domain.ReviewRepository;
-import com.soten.eatgo.review.service.ReviewService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,12 +27,6 @@ class ReviewServiceTest {
     @Test
     @DisplayName("식당 리뷰 추가")
     void addReview() {
-        Review review = Review.builder()
-                .name("YH")
-                .score(3)
-                .description("Tasty good")
-                .build();
-
         reviewService.addReview(1004L, "YH", 3, "Tasty good");
 
         verify(reviewRepository).save(any());
